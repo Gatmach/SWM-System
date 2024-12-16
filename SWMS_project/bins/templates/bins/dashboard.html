@@ -1,0 +1,29 @@
+{% extends "smart_bins/base.html" %}
+
+{% block content %}
+    <h1>Bin Monitoring Dashboard</h1>
+
+    <!-- Form to Upload an Image for Bin Status Detection -->
+    <form action="{% url 'update_bin_status' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="image">Upload Bin Image:</label>
+        <input type="file" name="image" required>
+        <button type="submit">Check Status</button>
+    </form>
+
+    <h2>Bin Status Overview</h2>
+    <div id="bins">
+        {% for bin in bins %}
+        <div class="card">
+            <h3>Bin at {{ bin.location }}</h3>
+            <p>Status: <span class="{% if bin.status == 'Full' %}status-full{% else %}status-empty{% endif %}">
+                {{ bin.status }}
+            </span></p>
+            <p>Last Updated: {{ bin.last_updated }}</p>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+    
+

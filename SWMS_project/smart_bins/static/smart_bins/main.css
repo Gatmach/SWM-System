@@ -1,0 +1,40 @@
+*{
+    margin:0;
+    box-sizing:0;
+    padding: 0;
+}
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 50px;
+}
+.bg-steel {
+    background-color: #5f788a; /* Dark grey/steel background */
+}
+
+.navbar-nav .nav-link {
+    color: #9fcdff; /* Light blue text */
+    font-size: 16px;
+    transition: color 0.2s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ffffff; /* White on hover */
+}
+
+.navbar-brand {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+nav {
+    margin-bottom: 20px;
+}
+nav a:hover {
+    text-decoration: underline;
+}
+.container {
+    text-align: left;
+    margin-top: 30px;
+}
+  
