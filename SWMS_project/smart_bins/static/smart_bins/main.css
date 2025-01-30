@@ -1,40 +1,82 @@
-*{
-    margin:0;
-    box-sizing:0;
-    padding: 0;
+/* ===================== Root Variables for Color Themes ===================== */
+:root {
+    --primary-color: #008080; /* Teal */
+    --secondary-color: #90EE90; /* Light Green */
+    --background-color: #f8f9fa; /* Light Gray */
+    --text-color: white;
+    --bg-color: #004d40; /* Dark Green */
+    --footer-text-color: white;
+    --link-color: #66bb6a; /* Light Green */
+    --hover-color: white;
 }
+
+/* ===================== Global Reset & Base Styles ===================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
-    margin-top: 50px;
-}
-.bg-steel {
-    background-color: #5f788a; /* Dark grey/steel background */
+    line-height: 1.5;
+    background-color: var(--background-color) !important;
+    color: var(--text-color);
 }
 
-.navbar-nav .nav-link {
-    color: #9fcdff; /* Light blue text */
-    font-size: 16px;
-    transition: color 0.2s ease-in-out;
+/* ===================== Navbar ===================== */
+.custom-navbar {
+    background-color: var(--bg-color) !important; /* Dark Green */
 }
 
-.navbar-nav .nav-link:hover {
-    color: #ffffff; /* White on hover */
+.custom-navbar .navbar-nav .nav-link {
+    color: white !important; /* Ensure links are white */
 }
 
-.navbar-brand {
-    color: #ffffff;
+.custom-navbar .navbar-nav .nav-link:hover {
+    color: var(--secondary-color) !important; /* Light Green on Hover */
+    transition: color 0.3s ease-in-out;
+    transform: scale(1.05);
+}
+
+/* ===================== Main Content ===================== */
+main {
+    padding: 20px;
+}
+/* Footer Section Styles */
+footer {
+    background-color: #1c2331;
+    color: white;
+}
+
+footer .row {
+    display: flex;
+    flex-wrap: wrap; /* Allow columns to wrap on smaller screens */
+    justify-content: center; /* Center content horizontally */
+}
+
+footer .col-md-3, footer .col-lg-2, footer .col-xl-3 {
+    flex: 1 1 200px; /* Ensure the columns have a minimum width but are flexible */
+    margin: 10px;
+}
+
+footer .col-md-3 h6, footer .col-lg-2 h6, footer .col-xl-2 h6 {
     font-weight: bold;
 }
 
-nav {
-    margin-bottom: 20px;
+footer .social-links-container i {
+    margin-right: 10px;
 }
-nav a:hover {
-    text-decoration: underline;
+footer a {
+    text-decoration: none; /* Remove underline */
 }
-.container {
-    text-align: left;
-    margin-top: 30px;
+/* Stacking columns on smaller screens */
+@media (max-width: 768px) {
+    footer .row {
+        flex-direction: column; /* Stack columns vertically on small screens */
+    }
+    
+    footer .col-md-3, footer .col-lg-3, footer .col-xl-3 {
+        text-align: center;
+    }
 }
-  

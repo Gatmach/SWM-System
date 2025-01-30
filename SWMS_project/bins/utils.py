@@ -11,15 +11,15 @@ def detect_bin_status(image_path):
         raise ValueError("Image not found or invalid format.")
 
     # Perform some image processing (e.g., thresholding)
-    _, thresholded = cv2.threshold(image, 128, 255, cv2.THRESH_BINARY)
+    thresholded = cv2.threshold(image, 128, 255, cv2.THRESH_BINARY)
     white_pixels = cv2.countNonZero(thresholded)
     total_pixels = thresholded.size
     fill_percentage = (white_pixels / total_pixels) * 100
 
     # Determine bin status based on fill percentage
-    if fill_percentage < 30:
+    if fill_percentage > 80:
         return 'Full'
-    elif 30 <= fill_percentage <= 70:
+    elif 20 <= fill_percentage <= 60:
         return 'Partially Full'
     else:
         return 'Empty'
