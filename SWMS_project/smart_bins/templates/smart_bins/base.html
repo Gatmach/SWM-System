@@ -25,8 +25,7 @@
         <nav class="navbar navbar-expand-lg custom-navbar">
             <div class="container-fluid">
                 <!-- Navbar Brand -->
-                <a class="navbar-brand mx-3" href="{% url 'smart_bins_home' %}">Smart Bins</a>
-
+                <a class="navbar-brand mx-3">Smart Bins</a>
                 <!-- Navbar Toggle Button -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
@@ -35,9 +34,7 @@
                 <!-- Collapsible Navbar Menu -->
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-5 mt-3 pe-3 text-center">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{% url 'smart_bins_home' %}">Home</a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link active" href="{% url 'smart_bins_home' %}">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'about_us' %}">About Us</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Bin Dashboard</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'route_dashboard' %}">Route Optimization</a></li>
@@ -46,16 +43,38 @@
                 </div>
             </div>
         </nav>
-    </header>        
-
+    </header>   
+   
     <!-- Main Content Block -->
-    <main class="container mt-5 pt-5">
+    <main class="container mt-5 pt-5 ms-0">
         {% block content %}
+        <!--Hero section-->
+        <div class="container-fluid px-0 mb-5"> 
+            <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class="w-100 carousel-image" src="/static/smart_bins/Images/hero.jpg" alt="Smart Waste Management System">
+                        <div class="carousel-caption hero-section"> 
+                            <div class="container">
+                                <div class="row justify-content-start">
+                                    <div class="col-lg-8 text-start">
+                                        <p class="fs-4 text-white welcome-text">Welcome</p>
+                                        <h1 class="display-1 text-white mb-5 animated slideInRight hero-title">
+                                            Smart Waste Management System
+                                        </h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>        
         {% endblock %}
     </main>
 
     <!-- Footer Section -->
-    <footer class="text-center text-lg-start text-white" style="background-color: #357860">
+    <footer class="text-center text-lg-start text-white" > 
         <!-- Section: Links -->
         <section>
             <div class="container text-center text-md-start mt-5">
@@ -63,52 +82,53 @@
                     <!-- Smart Bins Column -->
                     <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                         <div class="footer-top d-flex flex-column align-items-center">
-                            <img class="footer-logo" src="{% static 'smart_bins/Images/logo.jpeg' %}" alt="Logo" style="max-width: 100px; margin-bottom: 10px;">
+                            <img class="footer-logo" src="{% static 'smart_bins/Images/logo.jpeg' %}" alt="Logo" style="max-width: 80px; margin-bottom: 10px;">
                             <div class="mission-content text-center mb-4">
-                                <small></small>
-                                <p style="font-weight: 300; font-size: 0.6em; color: #ccc;">
-                                    SmartBin revolutionizes waste management, promoting hygiene and sustainability for a cleaner, healthier, and innovative future.
-                                </p>
+                                <small>
+                                    <p class="mission-title fw-bold fs-0.5 text-info mt-2">
+                                        SmartBin revolutionizes waste management, promoting hygiene and sustainability for a cleaner, healthier, and innovative future.
+                                    </p>
+                                </small>
                             </div>
-                            <div class="contact-info text-center">
-                                <h6 class="text-uppercase fw-bold text-white pt-3 ms-5 align-items-flex-start">Contact Us</h6>
-                                <div><i class="fas fa-envelope" style="margin-right: 0px;"></i> Email: <a href="mailto:support@swms.com" style="color: #d33b3b; margin-right: 0px;">support@swms.com</a></div>
-                                <div><i class="fas fa-phone-alt"></i> Tel: +123-456-7890</div>
-                            </div>
+                            <div class="contact-info text-center text-md-start">
+                                <h6 class="text-uppercase fw-bold text-white pt-3">Contact Us</h6>
+                                <div class="contact-details">
+                                    <div><i class="fas fa-envelope"></i> <span>Email: <a href="mailto:support@swms.com" class="text-white">support@swms.com</a></span></div>
+                                    <div><i class="fas fa-phone-alt"></i> <span>Tel: +123-456-7890</span></div>
+                                </div>
+                            </div>                            
                         </div>
                     </div>
     
                     <!-- Other Columns -->
                     <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
                         <h6 class="text-uppercase fw-bold text-white pt-5">Useful links</h6>
-                        <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: #7c4dff; height: 2px" />
-                        <p><a href="https://www.sciencedirect.com/science/article/pii/S2772415822000189" class="text-white" target="_blank">Home</a></p>
-                        <p><a href="https://www.pnas.org/doi/10.1073/pnas.082080899" class="text-white" target="_blank">About Us</a></p>
-                        <p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3710332/" class="text-white" target="_blank">Bin Dashboard</a></p>
-                        <p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3710332/" class="text-white" target="_blank">Route Optimization</a></p>
+                        <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 2px; background-color: #004d40; height: 2px" /> 
+                        <p><a href="{% url 'smart_bins_home' %}" class="text-white" target="_blank">Home</a></p>
+                        <p><a href="{% url 'about_us' %}" class="text-white" target="_blank">About Us</a></p>
+                        <p><a href="{% url 'dashboard' %}" class="text-white" target="_blank">Bin Dashboard</a></p>
+                        <p><a href="{% url 'route_dashboard' %}" class="text-white" target="_blank">Route Optimization</a></p>
                     </div>
     
                     <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
                         <h6 class="text-uppercase fw-bold text-white pt-5">Our Services</h6>
-                        <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: #7c4dff; height: 2px" />
-                        <p><a href="https://www.sciencedirect.com/science/article/pii/S2772415822000189" class="text-white" target="_blank">Smart Bin Monitoring</a></p>
-                        <p><a href="https://www.pnas.org/doi/10.1073/pnas.082080899" class="text-white" target="_blank">Route Optimization</a></p>
-                        <p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3710332/" class="text-white" target="_blank">Real-time Notifications</a></p>
-                        <p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3710332/" class="text-white" target="_blank">Data Analytics for Better Planning</a></p>
+                        <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 2px; background-color: #004d40; height: 2px" /> 
+                        <p><a href="#" class="text-white" target="_blank">Smart Bin Monitoring</a></p>
+                        <p><a href="#" class="text-white" target="_blank">Route Optimization</a></p>
+                        <p><a href="#" class="text-white" target="_blank">Real-time Notifications</a></p>
+                        <p><a href="#" class="text-white" target="_blank">Data Analytics for Better Planning</a></p>                        
                     </div>
-    
                     <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-4">
                         <div class="social-links-container">
-                            <h6 class="text-uppercase fw-bold text-white pt-5">Follow Us</h6>
-                            <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: #7c4dff; height: 2px" />
-                            <div style="align-items:start; font-weight:500;">
-                                <span><i class="fab fa-facebook mr-3" style="margin-bottom: 17px;"></i> <a href="#">Facebook</a></span><br>
-                                <span><i class="fab fa-twitter mr-3" style="margin-bottom: 17px;"></i> <a href="#">Twitter</a></span><br>
-                                <span><i class="fab fa-instagram mr-3" style="margin-bottom: 17px;"></i> <a href="#">Instagram</a></span><br>
-                                <span><i class="fab fa-linkedin mr-3" style="margin-bottom: 17px;"></i> <a href="#">LinkedIn</a></span>
+                            <h6 class="text-uppercase fw-bold text-white pt-5">Follow Us</h6> <br>
+                            <div class="social-icons">
+                                <a href="#"><i class="fab fa-facebook"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
                             </div>
                         </div>
-                    </div>
+                    </div>                    
                 </div>
             </div>
         </section>
