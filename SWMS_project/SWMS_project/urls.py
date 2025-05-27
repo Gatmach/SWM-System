@@ -7,7 +7,7 @@ Examples:
 Function views
     1. Add an import:  from my_app import views
     2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
+Class-based views 
     1. Add an import:  from other_app.views import Home
     2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
 Including another URLconf
@@ -18,8 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from bins.views import home  # Import the home view
 from django.conf import settings
-from django.conf.urls.static import static
-
+from django.conf.urls.static import static 
 urlpatterns = [
     path('', home, name='smart_bins_home'),  # Root URL for home page
     path('bins/', include('bins.urls')),
