@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" crossorigin="anonymous">
     
     <!-- Custom CSS (With Cache Busting) -->
-    <link rel="stylesheet" href="{% static 'smart_bins/main.css' %}?v={{ STATIC_VERSION }}">
-
+    <link rel="stylesheet" href="{% static 'smart_bins/main.css' %}">
+    
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
@@ -44,38 +44,34 @@
             </div>
         </nav>
     </header>   
-   
+
     <!-- Main Content Block -->
     <main class="container-fluid px-0">
-        {% block content %}
-        <!--Hero section-->
-        <section class="hero-section-split">
-            <div class="container">
-              <div class="row align-items-center">
-                <div class="col-md-6 text-section">
-                  <h1 class="display-5 fw-bold">Smart Waste Management System</h1>
-                  <p class="lead mt-3 mb-4">
-                    A smarter way to manage urban waste using real-time data and route optimization. Reduce pollution, save time, and build a sustainable future.
-                  </p>
-                  <a href="#features" class="btn btn-primary btn-lg">Explore More</a>
-                </div>
-                <div class="col-md-6 image-section">
-                  <img src="assets/hero-image.png" alt="Smart Waste Bin" class="img-fluid">
-                </div>
-              </div>
+        <section class="hero-section">
+            <div class="hero-text">
+                <h1 class="display-4 fw-bold">Optimize Waste Collection with Real-Time Data</h1>
+                <p class="lead text-dark">Smart sensor technology that transforms waste collection—improving efficiency, cutting costs, and supporting a cleaner future.</p>
+                <pre class="lead text-dark">Trusted by 50+ Municipalities Worldwide</pre>
+                <p class="text-secondary">Join the revolution in waste management with our innovative solutions.</p>
+                <button class="btn btn-primary btn-lg"><i class="fas fa-rocket me-2"></i> Get Started</button>
             </div>
-          </section>               
-        {% endblock %}
+            <div class="hero-image-container">
+                <img src="{% static 'smart_bins/images/hero.jpg' %}" class="hero-image" alt="Slide 1">
+                <img src="{% static 'smart_bins/images/hero1.jpg' %}" class="hero-image" alt="Slide 2">
+                <img src="{% static 'smart_bins/images/hero2.jpg' %}" class="hero-image" alt="Slide 3">
+            </div>
+        </section>
     </main>
+    {% block content %}
 
+    {% endblock %}
     <!-- Footer Section -->
-    <footer class="text-center text-lg-start text-white"> 
-        <!-- Section: Links -->
+    <footer class="text-white bg-dark">
         <section class="py-4">
-            <div class="container text-center text-md-start">
+            <div class="container text-md-start">
                 <div class="row g-4">
                     <!-- Smart Bins Column -->
-                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0 order-lg-1">
                         <div class="footer-top d-flex flex-column align-items-center align-items-lg-start">
                             <img class="footer-logo mb-3" src="{% static 'smart_bins/Images/logo.jpeg' %}" alt="Logo" style="max-width: 80px;">
                             <div class="mission-content mb-3">
@@ -85,36 +81,37 @@
                                     </p>
                                 </small>
                             </div>
-                            <div class="contact-info text-center text-lg-start">
+                            <div class="contact-info text-lg-start">
                                 <h6 class="text-uppercase fw-bold text-white">Contact Us</h6>
                                 <div class="contact-details">
                                     <div><i class="fas fa-envelope me-2"></i> <a href="mailto:support@swms.com" class="text-white">support@swms.com</a></div>
                                     <div><i class="fas fa-phone-alt me-2"></i> +123-456-7890</div>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
-    
-                    <!-- Other Columns -->
-                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                        <h6 class="text-uppercase fw-bold text-white">Useful links</h6>
-                        <hr class="mb-3 mt-0 d-inline-block mx-auto mx-lg-0" style="width: 60px; background-color: #004d40; height: 2px"/> 
+
+                    <!-- Useful Links Column -->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0 order-lg-2">
+                        <h6 class="text-uppercase fw-bold text-white">Useful Links</h6>
+                        <hr class="mb-3 mt-0 d-inline-block mx-auto mx-lg-0" style="width: 60px; background-color: #004d40; height: 2px"/>
                         <p><a href="{% url 'smart_bins_home' %}" class="text-white">Home</a></p>
                         <p><a href="{% url 'about_us' %}" class="text-white">About Us</a></p>
                         <p><a href="{% url 'dashboard' %}" class="text-white">Bin Dashboard</a></p>
-                        <p><a href="{% url 'route_dashboard' %}" class="text-white">Route Optimization</a></p>
                     </div>
-    
-                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+
+                    <!-- Our Services Column -->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0 order-lg-3">
                         <h6 class="text-uppercase fw-bold text-white">Our Services</h6>
-                        <hr class="mb-3 mt-0 d-inline-block mx-auto mx-lg-0" style="width: 60px; background-color: #004d40; height: 2px"/> 
+                        <hr class="mb-3 mt-0 d-inline-block mx-auto mx-lg-0" style="width: 60px; background-color: #004d40; height: 2px"/>
                         <p><a href="#" class="text-white">Smart Bin Monitoring</a></p>
                         <p><a href="#" class="text-white">Route Optimization</a></p>
                         <p><a href="#" class="text-white">Real-time Notifications</a></p>
-                        <p><a href="#" class="text-white">Data Analytics</a></p>                        
+                        <p><a href="#" class="text-white">Data Analytics</a></p>
                     </div>
-                    
-                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+
+                    <!-- Social Media Column -->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0 order-lg-4">
                         <div class="social-links-container">
                             <h6 class="text-uppercase fw-bold text-white mb-3">Follow Us</h6>
                             <div class="social-icons d-flex justify-content-center justify-content-lg-start">
@@ -124,17 +121,18 @@
                                 <a href="#"><i class="fab fa-linkedin-in"></i></a>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                 </div>
             </div>
         </section>
-    
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
             © 2024 Smart Waste Management System | All Rights Reserved.
         </div>
     </footer>
-    
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="{% static 'smart_bins/js/main.js' %}?v=1.2.3"></script>
+
 </body>
 </html>
