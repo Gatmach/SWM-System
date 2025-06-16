@@ -66,3 +66,7 @@
 ### **5.  Run the Application
     python manage.py runserver
 
+### **6. Contributors
+    1. Gatmach Yuol Nyuon
+    2. Akech Dau Atem
+
