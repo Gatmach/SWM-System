@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.log
+
+# Virtual Environments
+venv/
+env/
+smartBin/
+*.egg-info/
+*.dist-info/
+
+# Django
+*.db
+staticfiles/
+media/
