@@ -31,7 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django_browser_reload',
     'bins.apps.BinsConfig',
     'routes.apps.RoutesConfig',
     'notification.apps.NotificationConfig',
