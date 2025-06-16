@@ -1,17 +1,27 @@
-# Python
+# Python bytecode and caches
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
+
+# SQLite database files and logs
 *.sqlite3
+*.db
 *.log
 
-# Virtual Environments
+# Compiled Python files
+*.pyc
+
+# Virtual environments
 venv/
 env/
-smartBin/
+smartBin/  # Assuming this is your virtual environment directory
+
+# Python package metadata
 *.egg-info/
 *.dist-info/
 
-# Django
-*.db
+# Django static and media files
 staticfiles/
 media/
+
