@@ -41,15 +41,15 @@
 
 ### **Getting Started**
 
-#### **1. Clone the Repository**
+#### 1. Clone the Repository**
 
-### **2. Create and Activate Virtual Environment
+### 2. Create and Activate Virtual Environment
      python -m venv virtualenv_name
     virtualenv_name\Scripts\activate         # For Windows
     source virtualenv_name/bin/activate   # For Linux/macOS
-### **3.  Install Requirements
+### 3.  Install Requirements
     pip install -r requirements.txt
-### **4. Configure PostgreSQL Database
+### 4. Configure PostgreSQL Database
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -63,10 +63,10 @@
     Then run:
     python manage.py makemigrations
     python manage.py migrate
-### **5.  Run the Application
+### 5.  Run the Application
     python manage.py runserver
 
-### **6. Contributors
+### 6. Contributors
     1. Gatmach Yuol Nyuon
     2. Akech Dau Atem
 
