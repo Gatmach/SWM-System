@@ -34,3 +34,13 @@ function showSlides() {
 }
 
 document.addEventListener('DOMContentLoaded', showSlides);
+
+document.querySelectorAll('.fancy-card').forEach(card => {
+  card.addEventListener('mouseenter', () => {
+    card.style.boxShadow = '0 0 20px rgba(0, 168, 132, 0.4)';
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.boxShadow = '0 10px 30px rgba(0, 168, 132, 0.25)';
+  });
+});
+
