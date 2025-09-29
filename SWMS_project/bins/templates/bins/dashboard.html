@@ -1,29 +1,185 @@
 {% extends "smart_bins/base.html" %}
+{% load static %}
 
 {% block content %}
-    <h1>Bin Monitoring Dashboard</h1>
-
-    <!-- Form to Upload an Image for Bin Status Detection -->
-    <form action="{% url 'update_bin_status' %}" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <label for="image">Upload Bin Image:</label>
-        <input type="file" name="image" required>
-        <button type="submit">Check Status</button>
-    </form>
-
-    <h2>Bin Status Overview</h2>
-    <div id="bins">
-        {% for bin in bins %}
-        <div class="card">
-            <h3>Bin at {{ bin.location }}</h3>
-            <p>Status: <span class="{% if bin.status == 'Full' %}status-full{% else %}status-empty{% endif %}">
-                {{ bin.status }}
-            </span></p>
-            <p>Last Updated: {{ bin.last_updated }}</p>
-        </div>
-        {% endfor %}
+<!-- Dashboard Header -->
+<section class="dashboard-header">
+    <div class="container">
+        <h1>Bin Monitoring Dashboard</h1>
+        <p>Real-time monitoring of waste bin status using AI-powered image analysis</p>
     </div>
-{% endblock %}
+</section>
 
-    
+<!-- Upload Section -->
+<section class="upload-section">
+    <div class="container">
+        <div class="upload-card">
+            <div class="upload-header">
+                <h2>Check Bin Status</h2>
+                <p>Upload an image or use your camera to analyze bin fill level</p>
+            </div>
+            
+            <div class="upload-options">
+                <div class="upload-option active" id="upload-tab">
+                    <i class="fas fa-upload"></i>
+                    <span>Upload Image</span>
+                </div>
+                <div class="upload-option" id="camera-tab">
+                    <i class="fas fa-camera"></i>
+                    <span>Use Camera</span>
+                </div>
+            </div>
 
+            <!-- Upload Form -->
+            <div class="upload-content" id="upload-content">
+                <form action="{% url 'update_bin_status' %}" method="POST" enctype="multipart/form-data" id="bin-image-form">
+                    {% csrf_token %}
+                    <div class="file-upload-area" id="drop-zone">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Drag & drop your image here or</p>
+                        <label for="image-upload" class="upload-btn">Browse Files</label>
+                        <input type="file" id="image-upload" name="image" accept="image/*" required hidden>
+                        <div class="selected-file" id="selected-file"></div>
+                    </div>
+                    <div class="location-input">
+                        <label for="bin-location">Bin Location (optional):</label>
+                        <input type="text" id="bin-location" name="location" placeholder="E.g., Main Street, Building A">
+                    </div>
+                    <button type="submit" class="analyze-btn" id="analyze-btn" disabled>
+                        <i class="fas fa-search"></i> Analyze Image
+                    </button>
+                </form>
+            </div>
+
+            <!-- Camera Capture -->
+            <div class="upload-content hidden" id="camera-content">
+                <div class="camera-container">
+                    <div class="camera-preview" id="camera-preview">
+                        <video id="video" autoplay playsinline></video>
+                        <canvas id="canvas" class="hidden"></canvas>
+                    </div>
+                    <div class="camera-controls">
+                        <button id="start-camera" class="camera-btn">
+                            <i class="fas fa-camera"></i> Start Camera
+                        </button>
+                        <button id="capture-btn" class="camera-btn hidden">
+                            <i class="fas fa-camera"></i> Capture Image
+                        </button>
+                        <button id="retake-btn" class="camera-btn hidden">
+                            <i class="fas fa-redo"></i> Retake
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Analysis Results -->
+<section class="results-section hidden" id="results-section">
+    <div class="container">
+        <div class="results-card">
+            <h2>Analysis Results</h2>
+            <div class="result-content">
+                <div class="result-image">
+                    <img id="analyzed-image" src="" alt="Analyzed bin">
+                </div>
+                <div class="result-details">
+                    <div class="fill-level">
+                        <h3>Fill Level</h3>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <!-- Progress bar dynamically updated -->
+                                <div class="progress-fill" id="fill-level-bar"></div>
+                            </div>
+                            <span class="fill-percentage" id="fill-percentage">0%</span>
+                        </div>
+                    </div>
+                    <div class="status-indicator">
+                        <h3>Status</h3>
+                        <div class="status-badge" id="status-badge">
+                            <span class="status-dot"></span>
+                            <span class="status-text">Analyzing...</span>
+                        </div>
+                    </div>
+                    <div class="recommendation">
+                        <h3>Recommendation</h3>
+                        <p id="recommendation-text">Analysis in progress...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Bin Status Overview -->
+<section class="bins-overview">
+    <div class="container">
+        <div class="section-header">
+            <h2>Bin Status Overview</h2>
+            <p>Real-time monitoring of all waste bins in the system</p>
+        </div>
+        
+        <div class="bins-grid">
+            {% for bin in bins %}
+            <div class="bin-card">
+                <div class="bin-header">
+                    <h3>{{ bin.location }}</h3>
+                    <span class="bin-id">#{{ bin.id }}</span>
+                </div>
+                <div class="bin-status">
+                    <div class="status-indicator">
+                        <span class="status-dot {% if bin.fill_level > 80 %}status-full{% elif bin.fill_level > 50 %}status-mid{% else %}status-empty{% endif %}"></span>
+                        <span class="status-text">
+                            {% if bin.fill_level > 80 %} Full 
+                            {% elif bin.fill_level > 50 %} Half 
+                            {% else %} Empty 
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="fill-level">
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <!-- Dynamic fill percentage -->
+                                <div class="progress-fill 
+                                    {% if bin.fill_level > 80 %} bg-red-500
+                                    {% elif bin.fill_level > 50 %} bg-yellow-500
+                                    {% else %} bg-green-500
+                                    {% endif %}"
+                                    style="width: {{ bin.fill_level }}%;">
+                                </div>
+                            </div>
+                            <span class="fill-percentage">{{ bin.fill_level }}%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bin-details">
+                    <div class="detail-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>{{ bin.location }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Last Updated: {{ bin.last_updated|date:"Y-m-d H:i" }}</span>
+                    </div>
+                </div>
+                <div class="bin-actions">
+                    <button class="action-btn view-history" data-bin-id="{{ bin.id }}">
+                        <i class="fas fa-history"></i> History
+                    </button>
+                    <button class="action-btn notify" data-bin-id="{{ bin.id }}">
+                        <i class="fas fa-bell"></i> Notify
+                    </button>
+                </div>
+            </div>
+            {% empty %}
+            <div class="no-bins">
+                <i class="fas fa-trash-alt"></i>
+                <h3>No bins registered yet</h3>
+                <p>Upload an image to add your first bin to the system</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock content %}

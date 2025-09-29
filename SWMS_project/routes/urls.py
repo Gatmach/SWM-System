@@ -1,8 +1,9 @@
-from django.urls import path
-from .views import route_dashboard
-from . import views
 
+from django.urls import path
+from .views import route_dashboard_view, OptimizeRouteView
+from . import views
+    
 urlpatterns = [
-    path('dashboard/', route_dashboard, name='route_dashboard'),
-    path('optimized-route/', views.get_optimized_route, name='get_optimized_route'),
+    path("dashboard/", views.route_dashboard_view, name="route_dashboard"),
+    path("optimize/", views.OptimizeRouteView.as_view(), name="optimize_route"),
 ]

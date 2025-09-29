@@ -1,195 +1,493 @@
 {% extends "smart_bins/base.html" %}
-
+{% load static %}
 {% block content %}
-
-<!-- <section id="swm-services" class="py-5 bg-light">
-  <div class="container">
-    <h2 class="text-center mb-5 fw-bold text-success">Smart Waste Management Features</h2>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-
-      <div class="col">
-        <div class="feature-card">
-          <div class="icon">🗑️</div>
-          <h5>IoT-enabled Smart Bins</h5>
-          <p>Real-time monitoring and reporting of fill levels to prevent overflows and improve hygiene.</p>
+<!-- Problem Statement Section -->
+<section class="problem-section" id="problem-statement">
+    <div class="container">
+        <div class="section-title">
+            <h2>The Waste Management Challenge</h2>
+            <p>Traditional waste management systems struggle with inefficiencies that impact our environment and economy</p>
         </div>
-      </div>
+        <div class="problem-grid">
+            <div class="problem-card">
+                <div class="card-inner">
+                    <!-- Front Side -->
+                    <div class="card-front">
+                        <div class="problem-icon">
+                            <i class="fas fa-gas-pump"></i>
+                        </div> 
+                        <h3>Inefficient Collection Routes</h3>
+                        <p>Waste collection vehicles often follow fixed schedules, resulting in unnecessary trips to empty bins that aren't full yet.</p>
+                    </div>
+                    <!-- Back Side -->
+                    <div class="card-back">
+                        <div class="solution-header">
+                            <h3 class="solution-title">Our Solution</h3>
+                            <div class="underline"></div>
+                        </div>
+                        <p>Smart routing algorithms optimize collection paths based on real-time bin fill levels, reducing unnecessary trips by up to 40%.</p>
+                        <div class="solution-stats">
+                            <span class="stat">
+                                <i class="fas fa-chart-line"></i>
+                                40% Reduction
+                            </span>
+                            <span class="stat">
+                                <i class="fas fa-gas-pump"></i>
+                                Fuel Savings
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="problem-card">
+                <div class="card-inner">
+                    <!-- Front Side -->
+                    <div class="card-front">
+                        <div class="problem-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h3>Overflowing Bins</h3>
+                        <p>Without real-time monitoring, bins overflow creating litter, health hazards, and environmental pollution.</p>
+                    </div>
+                    <!-- Back Side -->
+                    <div class="card-back">
+                        <div class="solution-header">
+                            <h3 class="solution-title">Our Solution</h3>
+                            <div class="underline"></div>
+                        </div>
+                        <p>Real-time fill level monitoring with automatic alerts prevents overflow and ensures timely collections.</p>
+                        <div class="solution-stats">
+                            <span class="stat">
+                                <i class="fas fa-shield-check"></i>
+                                99% Prevention
+                            </span>
+                            <span class="stat">
+                                <i class="fas fa-bell"></i>
+                                Instant Alerts
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="problem-card">
+                <div class="card-inner">
+                    <!-- Front Side -->
+                    <div class="card-front">
+                        <div class="problem-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <h3>High Operational Costs</h3>
+                        <p>Inefficient routes and unnecessary collections lead to increased fuel, labor, and maintenance expenses.</p>
+                    </div>
+                    <!-- Back Side -->
+                    <div class="card-back">
+                        <div class="solution-header">
+                            <h3 class="solution-title">Our Solution</h3>
+                            <div class="underline"></div>
+                        </div>
+                        <p>Optimized operations reduce costs by 30-50% through efficient resource allocation and predictive maintenance.</p>
+                        <div class="solution-stats">
+                            <span class="stat">
+                                <i class="fas fa-piggy-bank"></i>
+                                50% Savings
+                            </span>
+                            <span class="stat">
+                                <i class="fas fa-chart-pie"></i>
+                                Cost Reduction
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="problem-card">
+                <div class="card-inner">
+                    <!-- Front Side -->
+                    <div class="card-front">
+                        <div class="problem-icon">
+                            <i class="fas fa-smog"></i>
+                        </div>
+                        <h3>Environmental Impact</h3>
+                        <p>Excessive vehicle emissions and improper waste management contribute significantly to carbon footprint.</p>
+                    </div>
+                    <!-- Back Side -->
+                    <div class="card-back">
+                        <div class="solution-header">
+                            <h3 class="solution-title">Our Solution</h3>
+                            <div class="underline"></div>
+                        </div>
+                        <p>Reduced vehicle emissions and better waste management practices lower carbon footprint by 35% annually.</p>
+                        <div class="solution-stats">
+                            <span class="stat">
+                                <i class="fas fa-leaf"></i>
+                                35% Less CO₂
+                            </span>
+                            <span class="stat">
+                                <i class="fas fa-recycle"></i>
+                                Eco-Friendly
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-      <div class="col">
-        <div class="feature-card">
-          <div class="icon">📍</div>
-          <h5>Route Optimization</h5>
-          <p>Dynamic routing based on bin data, reducing fuel use and collection time efficiently.</p>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="feature-card">
-          <div class="icon">📊</div>
-          <h5>Live Analytics Dashboard</h5>
-          <p>Visual performance insights and historical trends for better waste management decisions.</p>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="feature-card">
-          <div class="icon">🚨</div>
-          <h5>Overflow Alerts</h5>
-          <p>Automated alerts to notify waste managers of potential bin overflows before they happen.</p>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="feature-card">
-          <div class="icon">🌍</div>
-          <h5>Sustainability Goals</h5>
-          <p>Supports cleaner cities and contributes to SDG goals by reducing waste-related pollution.</p>
-        </div>
-      </div> 
-      <div class="col">
-        <div class="feature-card">
-          <div class="icon">⚙️</div>
-          <h5>System Integration</h5>
-          <p>Integrates seamlessly with municipal systems for smoother, automated waste collection processes.</p>
-        </div>
-      </div>
-
+            <div class="problem-card">
+                <div class="card-inner">
+                    <!-- Front Side -->
+                    <div class="card-front">
+                        <div class="problem-icon">
+                            <i class="fas fa-smog"></i>
+                        </div>
+                        <h3>Environmental Impact</h3>
+                        <p>Excessive vehicle emissions and improper waste management contribute significantly to carbon footprint.</p>
+                    </div>
+                    <!-- Back Side -->
+                    <div class="card-back">
+                        <div class="solution-header">
+                            <h3 class="solution-title">Our Solution</h3>
+                            <div class="underline"></div>
+                        </div>
+                        <p>Reduced vehicle emissions and better waste management practices lower carbon footprint by 35% annually.</p>
+                        <div class="solution-stats">
+                            <span class="stat">
+                                <i class="fas fa-leaf"></i>
+                                35% Less CO₂
+                            </span>
+                            <span class="stat">
+                                <i class="fas fa-recycle"></i>
+                                Eco-Friendly
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
     </div>
-  </div>
-</section> -->
-<!-- About Section -->
-<section id="about" class="bg-white py-16 px-6 md:px-20">
-  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
-    <!-- Text Content -->
-    <div data-aos="fade-right">
-      <h2 class="text-3xl md:text-4xl font-bold text-green-700 mb-4">About the System</h2>
-      <p class="text-gray-700 text-lg md:text-xl leading-relaxed mb-6">
-        Our <strong>Smart Waste Management System (SWMS)</strong> is a cutting-edge solution that leverages 
-        <span class="text-green-700 font-semibold">IoT technology, data analytics, and real-time monitoring</span> 
-        to revolutionize how cities handle waste. 
-        By tracking bin fill levels, optimizing collection routes, and providing actionable insights, 
-        SWMS ensures <em>cleaner streets, lower costs, and a more sustainable future</em>.
-      </p>
-      <a href="#features" class="inline-block bg-green-700 hover:bg-green-800 text-white font-semibold py-2 px-6 rounded-xl transition duration-300">
-        Learn More
-      </a>
-    </div>
-
-    <!-- Image or Illustration -->
-    <div data-aos="fade-left">
-      <img src="https://cdn-icons-png.flaticon.com/512/3514/3514491.png" alt="Smart Bin Illustration" class="w-full max-w-md mx-auto feature-card">
-    </div>
-  </div>
 </section>
-
 <!-- Key Features Section -->
-<section id="features" class="bg-gray-100 py-16 px-6 md:px-20">
-  <div class="max-w-7xl mx-auto text-center">
-    <h2 class="text-3xl md:text-4xl font-bold text-green-700 mb-4">Key Features</h2>
-    <p class="text-gray-700 text-lg mb-12">Discover how SWMS is transforming waste management with intelligent technology.</p>
-
-    <div class="feature-grid">
-      <div class="feature-card" data-aos="fade-up">
-        <img src="https://cdn-icons-png.flaticon.com/512/1046/1046857.png" alt="Smart Bin">
-        <h5>Real-Time Bin Monitoring</h5>
-        <p>Continuously track bin fill levels using IoT sensors to avoid overflow and optimize pickup schedules.</p>
-      </div>
-      <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
-        <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" alt="GPS Tracking">
-        <h5>GPS Location Tracking</h5>
-        <p>Monitor the exact position of bins and collection trucks for better coordination and route planning.</p>
-      </div>
-      <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-        <img src="https://cdn-icons-png.flaticon.com/512/2906/2906274.png" alt="Analytics">
-        <h5>Data Analytics</h5>
-        <p>Generate insightful reports on waste trends, usage patterns, and collection efficiency.</p>
-      </div>
-      <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
-        <img src="https://cdn-icons-png.flaticon.com/512/684/684830.png" alt="Route Optimization">
-        <h5>Route Optimization</h5>
-        <p>Automatically generate the most efficient waste collection routes, saving time and fuel.</p>
-      </div>
-      <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
-        <img src="https://cdn-icons-png.flaticon.com/512/545/545705.png" alt="Alerts">
-        <h5>Smart Alerts</h5>
-        <p>Receive notifications when bins are full, malfunctioning, or need urgent attention.</p>
-      </div>
-      <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
-        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Secure Cloud">
-        <h5>Cloud Integration</h5>
-        <p>All data is securely stored in the cloud with real-time sync and easy access across devices.</p>
-      </div>
+<section id="features" class="features-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Smart Features</h2>
+            <p>Our innovative solution combines IoT technology with advanced analytics to revolutionize waste management</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-microchip"></i> <!-- Replaced fa-sensor -->
+                </div>
+                <h3>Real-Time Monitoring</h3>
+                <p>Smart sensors provide live fill-level data from waste containers, enabling optimized collection schedules.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-route"></i>
+                </div>
+                <h3>AI Route Optimization</h3>
+                <p>Our intelligent algorithms create the most efficient collection routes, saving time and reducing fuel consumption.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-bar"></i> <!-- Replaced fa-analytics -->
+                </div>
+                <h3>Data Analytics Dashboard</h3>
+                <p>Gain valuable insights into waste generation patterns and optimize your operations with our analytics platform.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <h3>Smart Alerts</h3>
+                <p>Receive instant notifications when containers need emptying or when maintenance is required.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <h3>Sustainability Tracking</h3>
+                <p>Monitor your environmental impact with detailed reports on emissions saved and recycling rates.</p>
+            </div>
+        </div>
     </div>
-  </div>
+</section>
+<!-- How It Works Section -->
+<section id="how-it-works" class="process-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>How Our System Works</h2>
+            <p>A seamless integration of smart technology that transforms waste management</p>
+        </div>
+        
+        <div class="process-steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Sensor Installation</h3>
+                    <p>We install ultrasonic sensors in your waste containers to monitor fill levels in real-time.</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Data Transmission</h3>
+                    <p>Sensors transmit data via IoT networks to our secure cloud platform for analysis.</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Smart Analysis</h3>
+                    <p>Our AI algorithms process the data to predict fill patterns and optimize collection schedules.</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Route Optimization</h3>
+                    <p>The system generates the most efficient collection routes based on actual needs.</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <h3>Action & Reporting</h3>
+                    <p>Collection teams receive alerts, and you get comprehensive reports on your waste management.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
-<!-- How It Works Section --> 
-<section id="how-it-works" class="bg-white py-16 px-6 md:px-20">
-  <div class="max-w-6xl mx-auto text-center">
-    <h2 class="text-3xl md:text-4xl font-bold text-green-700 mb-4">How It Works</h2>
-    <p class="text-gray-700 text-lg mb-12">A simple, smart, and sustainable workflow.</p>
-
-    <div class="feature-grid">
-      <div class="feature-card" data-aos="zoom-in">
-        <img src="https://cdn-icons-png.flaticon.com/512/9473/9473790.png" alt="Smart Detection">
-        <h5>1. Smart Detection</h5>
-        <p>IoT sensors detect bin fill levels in real-time.</p>
-      </div>
-      <div class="feature-card" data-aos="zoom-in" data-aos-delay="100">
-        <img src="https://cdn-icons-png.flaticon.com/512/5949/5949673.png" alt="Data Transmission">
-        <h5>2. Data Transmission</h5>
-        <p>Data sent to the cloud via GSM/NB-IoT modules.</p>
-      </div>
-      <div class="feature-card" data-aos="zoom-in" data-aos-delay="200">
-        <img src="https://cdn-icons-png.flaticon.com/512/9427/9427785.png" alt="Dashboard Updates">
-        <h5>3. Dashboard Updates</h5>
-        <p>System dashboard displays bin statuses & maps.</p>
-      </div>
-      <div class="feature-card" data-aos="zoom-in" data-aos-delay="300">
-        <img src="https://cdn-icons-png.flaticon.com/512/5542/5542306.png" alt="Route Optimization">
-        <h5>4. Route Optimization</h5>
-        <p>Collection routes adjusted for efficiency.</p>
-      </div>
+<!-- Benefits/Impact Metrics Section -->
+<section id="impact-metrics" class="metrics-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Measurable Impact</h2>
+            <p>Our smart waste management system delivers tangible benefits for communities and the environment</p>
+        </div>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-icon">
+                    <i class="fas fa-gas-pump"></i>
+                </div>
+                <div class="metric-data" data-value="45">0%</div>
+                <div class="metric-label">Reduction in Fuel Consumption</div>
+                <div class="metric-subtitle">Through optimized routes</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-icon">
+                    <i class="fas fa-recycle"></i>
+                </div>
+                <div class="metric-data" data-value="28">0%</div>
+                <div class="metric-label">Increase in Recycling Rates</div>
+                <div class="metric-subtitle">Better waste segregation</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <div class="metric-data" data-value="52">0%</div>
+                <div class="metric-label">Savings on Operational Costs</div>
+                <div class="metric-subtitle">Labor + maintenance + fuel</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-icon">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <div class="metric-data" data-value="38">0%</div>
+                <div class="metric-label">Reduction in CO₂ Emissions</div>
+                <div class="metric-subtitle">Annual carbon footprint</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="metric-data" data-value="65">0%</div>
+                <div class="metric-label">Faster Collection Times</div>
+                <div class="metric-subtitle">Efficient route planning</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-icon">
+                    <i class="fas fa-trash-alt"></i>
+                </div>
+                <div class="metric-data" data-value="92">0%</div>
+                <div class="metric-label">Overflow Prevention</div>
+                <div class="metric-subtitle">Real-time monitoring success</div>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
 
-<!-- Live Demo Preview Section -->
-<section id="demo" class="bg-gray-50 py-16 px-6 md:px-20">
-  <div class="max-w-6xl mx-auto text-center">
-    <h2 class="text-3xl md:text-4xl font-bold text-green-700 mb-4">Live Demo Preview</h2>
-    <p class="text-gray-700 text-lg mb-8">Take a glimpse of how our real-time dashboard works.</p>
-    <div class="aspect-w-16 aspect-h-9 rounded-xl shadow-lg overflow-hidden">
-      <iframe src="https://your-demo-url.com" frameborder="0" allowfullscreen class="w-full h-full"></iframe>
+<!-- Testimonials Section -->
+<section id="testimonials" class="testimonials-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>What Our Clients Say</h2>
+            <p>Hear from institutions and communities in Juja that have transformed their waste management</p>
+            </div>
+            
+            <div class="testimonials-container">
+                <!-- JKUAT Testimonial -->
+                <div class="testimonial-card">
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="{% static 'smart_bins/images/profile.jpg' %}" alt="Mr. Otieno">
+                        </div>
+                        <div class="author-details">
+                            <h4>Prof. Samuel Maina</h4>
+                            <p>Director of Facilities Management, JKUAT</p>
+                            <div class="location-tag">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>JKUAT Main Campus, Juja</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-content">
+                        <p>"Since implementing smart waste sensors across JKUAT's main campus, we've reduced collection costs by 45% and eliminated overflowing bins during peak periods. The data analytics helped us optimize bin placement for our 15,000+ student population."</p>
+                    </div>
+                </div>
+                
+                <!-- Juja Municipality Testimonial -->
+                <div class="testimonial-card">
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="{% static 'smart_bins/images/profile.jpg' %}" alt="Mr. Otieno">
+                        </div>
+                        <div class="author-details">
+                            <h4>Mr. Benard Otieno</h4>
+                            <p>Juja Municipal Council Environment Officer</p>
+                            <div class="location-tag">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Juja Town Municipality</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-content">
+                        <p>"The smart waste system has revolutionized cleanliness in Juja town. We've reduced illegal dumping by 60% and improved collection efficiency by 50%. Residents can now report issues instantly through the mobile app."</p>
+                    </div>
+                </div>
+                
+                <!-- Petpa Apartments Testimonial -->
+                <div class="testimonial-card">
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="{% static 'smart_bins/images/profile.jpg' %}" alt="Mr. Otieno">
+                        </div>
+                        <div class="author-details">
+                            <h4>Ms. Ann Wairimu</h4>
+                            <p>Property Manager, Petpa Apartments</p>
+                            <div class="location-tag">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Petpa Apartments, Juja</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-content">
+                        <p>"At Petpa Apartments, smart bins have eliminated waste management complaints from our 200+ residents. The automated alerts ensure timely collections, and we've reduced waste disposal costs by 35% monthly."</p>
+                    </div>
+                </div>
+        </div>
+    </section>
+
+    <!-- Interactive Demo Section -->
+<section id="interactive-demo" class="demo-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>See Our System In Action</h2>
+            <p>Explore how our smart waste management platform works with this interactive demo</p>
+        </div>
+        
+        <div class="demo-container">
+            <div class="demo-visual">
+                <div class="bin-visualization">
+                    <div class="bin-container">
+                        <div class="bin">
+                            <div class="bin-lid"></div>
+                            <div class="bin-body">
+                                <div class="waste-level" data-level="50"></div>
+                            </div>
+                        </div>
+                        <div class="bin-label">Smart Bin Demo</div>
+                        <div class="bin-data">
+                            <span class="fill-level">50% Full</span>
+                            <span class="last-emptied">Last emptied: 2 days ago</span>
+                        </div>
+                    </div>
+                    
+                    <div class="status-alert" id="statusAlert"></div>
+                    
+                    <div class="controls">
+                        <button class="control-btn" data-action="increase">Increase Waste Level</button>
+                        <button class="control-btn" data-action="decrease">Decrease Waste Level</button>
+                        <button class="control-btn alert-btn" data-action="alert">Generate Alert</button>
+                        <button class="control-btn" data-action="reset">Reset Bin</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="demo-content">
+                <h3>Real-Time Monitoring Dashboard</h3>
+                <p>Our interactive dashboard provides live insights into your waste management operations:</p>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Live fill-level monitoring of all containers</li>
+                    <li><i class="fas fa-check-circle"></i> Predictive analytics for collection scheduling</li>
+                    <li><i class="fas fa-check-circle"></i> Customizable alert system</li>
+                    <li><i class="fas fa-check-circle"></i> Historical data and trend analysis</li>
+                    <li><i class="fas fa-check-circle"></i> Environmental impact reporting</li>
+                </ul>
+                
+                <div class="demo-cta">
+                    <a href="#" class="demo-button">Request a Live Demo</a>
+                </div>
+            </div>
+        </div>
     </div>
-    <p class="text-sm text-gray-500 mt-4">Note: You can request full access via our Contact page.</p>
-  </div>
 </section>
 
-<!-- Impact Statistics Section -->
-<section id="impact" class="bg-green-700 py-16 px-6 md:px-20 text-white">
-  <div class="max-w-6xl mx-auto text-center">
-    <h2 class="text-3xl md:text-4xl font-bold mb-4">Our Impact So Far</h2>
-    <p class="text-lg mb-12">We’re already making a difference in multiple communities.</p>
-    <div class="feature-grid">
-      <div class="feature-card bg-green-800">
-        <p class="text-4xl font-bold">+30%</p>
-        <p class="mt-2 text-sm">Reduction in Collection Costs</p>
-      </div>
-      <div class="feature-card bg-green-800">
-        <p class="text-4xl font-bold">+40%</p>
-        <p class="mt-2 text-sm">Improved Efficiency</p>
-      </div>
-      <div class="feature-card bg-green-800">
-        <p class="text-4xl font-bold">20+</p>
-        <p class="mt-2 text-sm">Smart Bins Deployed</p>
-      </div>
-      <div class="feature-card bg-green-800">
-        <p class="text-4xl font-bold">3</p>
-        <p class="mt-2 text-sm">Cities Served</p>
-      </div>
+<!-- Call-to-Action Section -->
+<section id="cta" class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2>Ready to Transform Your Waste Management?</h2>
+            <p>Join hundreds of municipalities and businesses already benefiting from our smart waste solution</p>
+            
+            <div class="cta-buttons">
+                <a href="#" class="cta-button primary">Get Started Today</a>
+                <a href="#" class="cta-button secondary">Schedule a Demo</a>
+            </div>
+            
+            <div class="cta-features">
+                <div class="cta-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>No upfront hardware costs</span>
+                </div>
+                <div class="cta-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>30-day money-back guarantee</span>
+                </div>
+                <div class="cta-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Quick installation & setup</span>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
 
 {% endblock %}

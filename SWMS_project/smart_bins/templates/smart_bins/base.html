@@ -12,13 +12,26 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" crossorigin="anonymous">
     
-    <!-- Custom CSS (With Cache Busting) -->
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- AOS Animations CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Leaflet CSS for Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'smart_bins/main.css' %}">
-    
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <!-- Include AOS Library in <head> or before </body> -->
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Route Dashboard Specific CSS (loaded only on route pages) -->
+    {% block extra_css %}{% endblock %}
 </head>
 
 <body>
@@ -45,28 +58,30 @@
                 </div>
             </div>
         </nav>
-    </header>   
+    </header>
 
-    <!-- Main Content Block -->
     <main class="container-fluid px-0">
         <section class="hero-section">
-            <div class="hero-text">
-                <h1 class="display-4 fw-bold">Optimize Waste Collection with Real-Time Data</h1>
-                <p class="lead text-dark">Smart sensor technology that transforms waste collection—improving efficiency, cutting costs, and supporting a cleaner future.</p>
-                <p class="lead text-dark">Trusted by 50+ Municipalities Worldwide</p>
-                <p class="text-secondary">Join the revolution in waste management with our innovative solutions.</p>
-                <button class="btn btn-primary btn-lg"><i class="fas fa-rocket me-2"></i> Get Started</button>
-            </div>
-            <div class="hero-image-container">
-                <img src="{% static 'smart_bins/images/hero.jpg' %}" class="hero-image" alt="Slide 1">
-                <img src="{% static 'smart_bins/images/hero1.jpg' %}" class="hero-image" alt="Slide 2">
-                <img src="{% static 'smart_bins/images/hero2.jpg' %}" class="hero-image" alt="Slide 3">
+            <div class="hero-bg-container">
+                <img src="{% static 'smart_bins/images/hero.jpg' %}" class="hero-bg-image" alt="Background 1">
+                <img src="{% static 'smart_bins/images/hero1.jpg' %}" class="hero-bg-image" alt="Background 2">
+                <img src="{% static 'smart_bins/images/hero2.jpg' %}" class="hero-bg-image" alt="Background 3">
+            </div>  
+            <!-- Hero Text Content -->
+            <div class="container">
+                <div class="hero-text">
+                    <h1 class="display-4 fw-bold">Optimize Waste Collection with Real-Time Data</h1>
+                    <p class="lead">Smart sensor technology that transforms waste collection—improving efficiency, cutting costs, and supporting a cleaner future.</p>
+                    <p class="lead">Trusted by 50+ Municipalities Worldwide</p>
+                    <p>Join the revolution in waste management with our innovative solutions.</p>
+                    <button class="cta-button"><i class="fas fa-rocket me-2"></i> Get Started</button>
+                </div>
             </div>
         </section>
-    </main>
-    {% block content %}
-
-    {% endblock %}
+        <!-- Main Content Block -->
+        {% block content %}{% endblock %}
+    </main>   
+    
     <!-- Footer Section -->
     <footer class="text-white bg-dark">
         <section class="py-4">
@@ -75,14 +90,6 @@
                     <!-- Smart Bins Column -->
                     <div class="col-lg-3 col-md-6 mb-4 mb-md-0 order-lg-1">
                         <div class="footer-top d-flex flex-column align-items-center align-items-lg-start">
-                            <img class="footer-logo mb-3" src="{% static 'smart_bins/Images/logo.jpeg' %}" alt="Logo" style="max-width: 80px;">
-                            <div class="mission-content mb-3">
-                                <small>
-                                    <p class="mission-title fw-bold text-info">
-                                        SmartBin revolutionizes waste management, promoting hygiene and sustainability for a cleaner, healthier, and innovative future.
-                                    </p>
-                                </small>
-                            </div>
                             <div class="contact-info text-lg-start">
                                 <h6 class="text-uppercase fw-bold text-white">Contact Us</h6>
                                 <div class="contact-details">
@@ -92,7 +99,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- Useful Links Column -->
                     <div class="col-lg-3 col-md-6 mb-4 mb-md-0 order-lg-2">
                         <h6 class="text-uppercase fw-bold text-white">Useful Links</h6>
@@ -102,7 +108,6 @@
                         <p><a href="{% url 'dashboard' %}" class="text-white">Bin Dashboard</a></p>
                         <p><a href="{% url 'route_dashboard' %}" class="text-white">Route Optimization</a></p>
                         <p><a href="/admin" class="text-white">Admin Panel</a></p>
-                        
                     </div>
 
                     <!-- Our Services Column -->
@@ -135,12 +140,36 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
+    <!-- ===== JS Files ===== -->
+
+    <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="{% static 'smart_bins/js/main.js' %}?v=1.2.3"></script>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <!-- AOS Animation JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- Google Maps API (only load if needed) -->
+    {% if request.resolver_match.url_name == 'route_dashboard' %}
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&libraries=geometry,places"></script>
+    {% endif %}
+
+    <!-- Your Custom JS -->
+    <script src="{% static 'smart_bins/js/main.js' %}?v=1.2.3"></script>
+
+    <!-- Extra JavaScript blocks -->
+    {% block extra_js %}{% endblock %}
+
     <script>
+        // Initialize AOS animations
         AOS.init();
+        
+        // Global initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Smart Waste Management System initialized');
+        });
     </script>
 </body>
 </html>

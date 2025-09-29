@@ -1,44 +1,414 @@
 {% extends "smart_bins/base.html" %}
+{% load static %}
+
 {% block content %}
-<!-- <head>
-    <title>Route Optimization Dashboard</title>
-</head> -->
-<h1>Route Optimization Dashboard</h1>
+<div class="dashboard-container">
+    <!-- Route Optimization Header -->
+    <section class="route-header fade-in-up">
+        <div class="container text-center">
+            <h1><i class="fas fa-route me-2"></i>Advanced Route Optimization Dashboard</h1>
+            <p>AI-powered waste collection routes with real-time GPS tracking & fuel optimization</p>
+            <div class="header-controls mt-4">
+                <button id="recalcBtn" class="btn btn-primary btn-lg me-3">
+                    <i class="fas fa-sync-alt me-2"></i> Recalculate Optimal Routes
+                </button>
+                <button id="trackBtn" class="btn btn-success btn-lg">
+                    <i class="fas fa-satellite-dish me-2"></i> Start Live Tracking
+                </button>
+            </div>
+        </div>
+    </section>
 
-    <form id="routeForm">
-        {% csrf_token %}
-        <label for="start">Start Point:</label>
-        <input type="text" id="start" name="start" required><br>
+    <!-- Real-time Monitoring & Interactive Map -->
+    <section class="real-time-section mt-5 fade-in-up">
+        <div class="container">
+            <div class="section-header text-center mb-4">
+                <h2><i class="fas fa-map-marked-alt me-2"></i>Live Bin Status & Optimized Routes</h2>
+                <p>Monitor bins and visualize AI-optimized collection paths with real-time GPS tracking</p>
+            </div>
 
-        <label for="end">End Point:</label>
-        <input type="text" id="end" name="end" required><br>
+            <div class="row">
+                <!-- Status Overview with Priority Indicators -->
+                <div class="col-lg-3 col-md-12 mb-4">
+                    <div class="status-overview">
+                        <div class="status-header mb-3">
+                            <h4><i class="fas fa-tachometer-alt me-2"></i>Bin Priority Status</h4>
+                            <div class="last-update">Updated: <span id="last-update">Just now</span></div>
+                        </div>
+                        
+                        <div class="status-item critical priority-high">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div class="status-info">
+                                <h3 id="critical-count">12</h3>
+                                <p>Critical Bins (90%+ Full)</p>
+                                <div class="priority-badge">HIGH PRIORITY</div>
+                            </div>
+                        </div>
+                        <div class="status-item warning priority-medium">
+                            <i class="fas fa-clock"></i>
+                            <div class="status-info">
+                                <h3 id="warning-count">24</h3>
+                                <p>Need Soon (70-89% Full)</p>
+                                <div class="priority-badge">MEDIUM PRIORITY</div>
+                            </div>
+                        </div>
+                        <div class="status-item normal priority-low">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="status-info">
+                                <h3 id="normal-count">48</h3>
+                                <p>Normal Status</p>
+                                <div class="priority-badge">LOW PRIORITY</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Quick Actions -->
+                        <div class="quick-actions mt-4">
+                            <h5><i class="fas fa-bolt me-2"></i>Quick Actions</h5>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-download me-1"></i> Export Route Data
+                                </button>
+                                <button class="btn btn-outline-info btn-sm">
+                                    <i class="fas fa-print me-1"></i> Print Route Plan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <label for="locations">Bin Locations (comma-separated):</label>
-        <input type="text" id="locations" name="locations" required><br>
+                <!-- Interactive Google Map with Controls -->
+                <div class="col-lg-9 col-md-12">
+                    <div class="map-container">
+                        <div class="map-controls">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-outline-dark active" id="view-all">
+                                    <i class="fas fa-globe-americas"></i> View All
+                                </button>
+                                <button type="button" class="btn btn-outline-dark" id="view-critical">
+                                    <i class="fas fa-exclamation-triangle"></i> Critical Only
+                                </button>
+                                <button type="button" class="btn btn-outline-dark" id="view-route">
+                                    <i class="fas fa-route"></i> Show Route
+                                </button>
+                            </div>
+                            <div class="map-legend">
+                                <span class="legend-item"><i class="fas fa-map-marker-alt critical"></i> Critical</span>
+                                <span class="legend-item"><i class="fas fa-map-marker-alt warning"></i> Warning</span>
+                                <span class="legend-item"><i class="fas fa-map-marker-alt normal"></i> Normal</span>
+                            </div>
+                        </div>
+                        <div id="map"></div>
+                        <div class="map-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Route Distance:</span>
+                                <span class="stat-value" id="map-distance">42.5 km</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Bins in Route:</span>
+                                <span class="stat-value" id="map-bins-count">36</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Estimated Fuel:</span>
+                                <span class="stat-value" id="map-fuel">28.3 L</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <button type="submit">Optimize Route</button>
-    </form>
+    <!-- Advanced Optimization Results -->
+    <section class="optimization-results mt-5 fade-in-up">
+        <div class="container">
+            <div class="section-header text-center mb-5">
+                <h2><i class="fas fa-chart-line me-2"></i>AI Optimization Results</h2>
+                <p>Advanced route analytics with fuel efficiency metrics and environmental impact</p>
+            </div>
 
-    <h2>Optimized Route</h2>
-    <div id="routeResult"></div>
+            <div class="row">
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="result-card optimized">
+                        <div class="result-icon">
+                            <i class="fas fa-route"></i>
+                            <div class="optimization-badge">OPTIMIZED</div>
+                        </div>
+                        <h4>Total Distance</h4>
+                        <p id="total-distance">42.5 km</p>
+                        <div class="comparison">
+                            <span class="comparison-badge improvement">-15% vs previous</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="result-card optimized">
+                        <div class="result-icon">
+                            <i class="fas fa-clock"></i>
+                            <div class="optimization-badge">EFFICIENT</div>
+                        </div>
+                        <h4>Estimated Time</h4>
+                        <p id="estimated-time">3.2 hrs</p>
+                        <div class="comparison">
+                            <span class="comparison-badge improvement">-22% vs previous</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="result-card optimized">
+                        <div class="result-icon">
+                            <i class="fas fa-gas-pump"></i>
+                            <div class="optimization-badge">SAVINGS</div>
+                        </div>
+                        <h4>Fuel Savings</h4>
+                        <p id="fuel-savings">18%</p>
+                        <div class="comparison">
+                            <span class="comparison-badge savings">Saves 45L weekly</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="result-card optimized">
+                        <div class="result-icon">
+                            <i class="fas fa-leaf"></i>
+                            <div class="optimization-badge">GREEN</div>
+                        </div>
+                        <h4>CO₂ Reduction</h4>
+                        <p id="co2-reduction">24.5 kg</p>
+                        <div class="comparison">
+                            <span class="comparison-badge environmental">= 12 trees planted</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <script>
-        document.getElementById('routeForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+            <!-- Route Comparison -->
+            <div class="route-comparison mt-4">
+                <div class="comparison-card">
+                    <h5><i class="fas fa-balance-scale me-2"></i>Route Efficiency Comparison</h5>
+                    <div class="comparison-bars">
+                        <div class="bar-container">
+                            <div class="bar-label">Previous Route</div>
+                            <div class="bar">
+                                <div class="bar-fill previous" style="width: 100%"></div>
+                                <span class="bar-value">50.2 km</span>
+                            </div>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-label">Optimized Route</div>
+                            <div class="bar">
+                                <div class="bar-fill optimized" style="width: 85%"></div>
+                                <span class="bar-value">42.5 km</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            const formData = new FormData(this);
+    <!-- Advanced Analytics with Predictive Insights -->
+    <section class="analytics-section mt-5 fade-in-up">
+        <div class="container">
+            <div class="section-header text-center mb-5">
+                <h2><i class="fas fa-chart-bar me-2"></i>Predictive Analytics & Performance Insights</h2>
+                <p>AI-driven forecasts and historical performance analysis</p>
+            </div>
 
-            fetch("{% url 'get_optimized_route' %}", {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                const resultDiv = document.getElementById('routeResult');
-                resultDiv.innerHTML = `<p>Route: ${data.route.join(' → ')}</p><p>Total Distance: ${data.distance} km</p>`;
-            })
-            .catch(error => console.error('Error:', error));
-        });
-    </script>
+            <div class="row">
+                <div class="col-lg-6 col-md-12 mb-4">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h5><i class="fas fa-trend-up me-2"></i>Route Efficiency Over Time</h5>
+                            <div class="chart-controls">
+                                <select class="form-select form-select-sm">
+                                    <option>Last 7 Days</option>
+                                    <option>Last 30 Days</option>
+                                    <option>Last 90 Days</option>
+                                </select>
+                            </div>
+                        </div>
+                        <canvas id="efficiency-chart"></canvas>
+                        <div class="chart-footer">
+                            <div class="trend-indicator positive">
+                                <i class="fas fa-arrow-up"></i> 12% improvement trend
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12 mb-4">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h5><i class="fas fa-gas-pump me-2"></i>Fuel Consumption Analysis</h5>
+                            <div class="chart-controls">
+                                <select class="form-select form-select-sm">
+                                    <option>Weekly</option>
+                                    <option>Monthly</option>
+                                    <option>Quarterly</option>
+                                </select>
+                            </div>
+                        </div>
+                        <canvas id="fuel-chart"></canvas>
+                        <div class="chart-footer">
+                            <div class="trend-indicator positive">
+                                <i class="fas fa-arrow-down"></i> 8% reduction this month
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Predictive Analytics -->
+            <div class="row mt-4">
+                <div class="col-md-4 mb-4">
+                    <div class="predictive-card">
+                        <div class="predictive-header">
+                            <i class="fas fa-brain"></i>
+                            <h6>Next 24h Forecast</h6>
+                        </div>
+                        <div class="predictive-content">
+                            <div class="prediction-item">
+                                <span class="prediction-label">Bins reaching critical:</span>
+                                <span class="prediction-value">8-12 bins</span>
+                            </div>
+                            <div class="prediction-item">
+                                <span class="prediction-label">Optimal collection time:</span>
+                                <span class="prediction-value">06:00-09:00 AM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="predictive-card">
+                        <div class="predictive-header">
+                            <i class="fas fa-cloud-sun"></i>
+                            <h6>Weather Impact</h6>
+                        </div>
+                        <div class="predictive-content">
+                            <div class="prediction-item">
+                                <span class="prediction-label">Tomorrow's weather:</span>
+                                <span class="prediction-value">Sunny, 25°C</span>
+                            </div>
+                            <div class="prediction-item">
+                                <span class="prediction-label">Route impact:</span>
+                                <span class="prediction-value positive">Favorable</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="predictive-card">
+                        <div class="predictive-header">
+                            <i class="fas fa-traffic-light"></i>
+                            <h6>Traffic Predictions</h6>
+                        </div>
+                        <div class="predictive-content">
+                            <div class="prediction-item">
+                                <span class="prediction-label">Peak hours impact:</span>
+                                <span class="prediction-value">Moderate (15min delay)</span>
+                            </div>
+                            <div class="prediction-item">
+                                <span class="prediction-label">Recommended start:</span>
+                                <span class="prediction-value">Before 7:00 AM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Smart Alert System with Real-time Notifications -->
+    <section class="alerts-section mt-5 mb-5 fade-in-up">
+        <div class="container">
+            <div class="section-header text-center mb-5">
+                <h2><i class="fas fa-bell me-2"></i>Smart Alert System</h2>
+                <p>Real-time notifications and proactive monitoring</p>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="alert-card critical active-alert">
+                        <div class="alert-icon">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <div class="alert-badge">5</div>
+                        </div>
+                        <h5>Bin Overflow</h5>
+                        <p class="alert-description">Immediate attention required</p>
+                        <p class="alert-count">5 Active Alerts</p>
+                        <div class="alert-action">
+                            <button class="btn btn-sm btn-outline-danger">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="alert-card warning predictive-alert">
+                        <div class="alert-icon">
+                            <i class="fas fa-clock"></i>
+                            <div class="alert-badge">12</div>
+                        </div>
+                        <h5>Predictive Fullness</h5>
+                        <p class="alert-description">Bins reaching capacity soon</p>
+                        <p class="alert-count">12 Predictions</p>
+                        <div class="alert-action">
+                            <button class="btn btn-sm btn-outline-warning">Schedule</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="alert-card info route-alert">
+                        <div class="alert-icon">
+                            <i class="fas fa-route"></i>
+                            <div class="alert-badge">2</div>
+                        </div>
+                        <h5>Route Deviations</h5>
+                        <p class="alert-description">Vehicles off optimal path</p>
+                        <p class="alert-count">2 Detections</p>
+                        <div class="alert-action">
+                            <button class="btn btn-sm btn-outline-info">Recalculate</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="alert-card success report-alert">
+                        <div class="alert-icon">
+                            <i class="fas fa-chart-line"></i>
+                            <div class="alert-badge">New</div>
+                        </div>
+                        <h5>Performance Reports</h5>
+                        <p class="alert-description">Weekly analytics ready</p>
+                        <p class="alert-count">Weekly Report Ready</p>
+                        <div class="alert-action">
+                            <button class="btn btn-sm btn-outline-success">Download</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Alert Feed -->
+            <div class="alert-feed mt-4">
+                <div class="feed-header">
+                    <h5><i class="fas fa-stream me-2"></i>Live Alert Feed</h5>
+                    <span class="badge bg-primary">Real-time</span>
+                </div>
+                <div class="feed-content">
+                    <div class="feed-item new">
+                        <i class="fas fa-circle"></i>
+                        <span class="feed-text">Bin #247 reached 95% capacity - High priority</span>
+                        <span class="feed-time">2 min ago</span>
+                    </div>
+                    <div class="feed-item">
+                        <i class="fas fa-circle"></i>
+                        <span class="feed-text">Vehicle #3 completed route 15min ahead of schedule</span>
+                        <span class="feed-time">15 min ago</span>
+                    </div>
+                    <div class="feed-item">
+                        <i class="fas fa-circle"></i>
+                        <span class="feed-text">Weather alert: Rain expected in 2 hours</span>
+                        <span class="feed-time">30 min ago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 {% endblock %}
-

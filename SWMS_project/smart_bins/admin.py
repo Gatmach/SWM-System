@@ -1,12 +1,13 @@
 from django.contrib import admin
-from .models import User
-from .models import WasteBin, Route
+from .models import User, WasteBin, Route
 from notification.models import Notification
-
-# Register your models here.
 
 admin.site.register(User)
 admin.site.register(WasteBin)
 admin.site.register(Notification)
-admin.site.register(Route)
 
+@admin.register(Route)
+class RouteAdmin(admin.ModelAdmin):
+    list_display = ("start_point", "end_point", "distance_km", "estimated_time_min", "created_at")
+    search_fields = ("start_point", "end_point")
+    filter_horizontal = ("bins",)
